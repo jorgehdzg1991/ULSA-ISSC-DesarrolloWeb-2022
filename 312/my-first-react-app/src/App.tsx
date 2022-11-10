@@ -3,6 +3,7 @@ import Home from './components/routes/Home';
 import Autos from './components/routes/Autos';
 import RegistroUsuario from './components/routes/RegistroUsuario';
 import InicioSesion from './components/routes/InicioSesion';
+import ListaAutos from './components/routes/ListaAutos';
 
 const appRouter = createBrowserRouter([
   {
@@ -26,7 +27,14 @@ const appRouter = createBrowserRouter([
   },
   {
     path: '/autos',
-    element: <Autos />
+    element: <Autos />,
+    children: [
+      {
+        path: '/autos',
+        index: true,
+        element: <ListaAutos />
+      }
+    ]
   }
 ]);
 
