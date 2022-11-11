@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 import AppNavbar from '../AppNavbar';
 
 export default function Autos() {
@@ -26,7 +27,9 @@ export default function Autos() {
     return (
         <>
             <AppNavbar />
-            <Outlet />
+            <Container>
+                <Outlet />
+            </Container>
         </>
     );
 }

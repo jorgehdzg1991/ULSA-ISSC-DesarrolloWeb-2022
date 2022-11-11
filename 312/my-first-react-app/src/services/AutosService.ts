@@ -62,4 +62,49 @@ export default class AutosService {
             throw e;
         }
     }
+
+    public async registrar(auto: Auto): Promise<Auto> {
+        try {
+            const respuesta = await axios.post(
+                this.baseUrl,
+                auto,
+                { headers: this.headers }
+            );
+
+            const {
+                id,
+                modelo,
+                marca,
+                submarca,
+                precio,
+                fechaCreacion,
+                fechaActualizacion
+            } = respuesta.data as AutoConFormatoDelBackend;
+
+            return new Auto(
+                id,
+                modelo,
+                marca,
+                submarca,
+                precio,
+                new Date(fechaCreacion),
+                new Date(fechaActualizacion)
+            );
+        } catch (e) {
+            if (e instanceof AxiosError && e.response) {
+                switch (e.response.status) {
+                    case 400: // Bad Request
+                        throw new Error('ErrorFormularioIncompleto');
+                    case 401: // Unauthorized
+                        throw new Error('ErrorSesionExpiradaOInvalida');
+                    case 409: // Conflict
+                        throw new Error('ErrorModeloDuplicado');
+                    default:
+                        throw e;
+                }
+            }
+
+            throw e;
+        }
+    }
 }
