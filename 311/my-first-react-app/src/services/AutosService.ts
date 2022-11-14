@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import Auto from '../models/Auto';
 
 interface AutoApiObject {
@@ -47,6 +47,42 @@ export default class AutosService {
             )
         ));
         return listaAutos;
+    }
+
+    public async obtenerPorId(id: number): Promise<Auto> {
+        try {
+            const respuesta = await axios.get(
+                `${this.baseUrl}/${id}`,
+                { headers: this.headers }
+            );
+    
+            const {
+                modelo,
+                marca,
+                submarca,
+                precio,
+                fechaCreacion,
+                fechaActualizacion
+            } = respuesta.data as AutoApiObject;
+    
+            return new Auto(
+                id,
+                modelo,
+                marca,
+                submarca,
+                precio,
+                new Date(fechaCreacion),
+                new Date(fechaActualizacion)
+            );
+        } catch (e) {
+            if (e instanceof AxiosError && e.response) {
+                if (e.response.status === 404) {
+                    throw new Error('ErrorAutoNoEncontrado');
+                }
+            }
+
+            throw e;
+        }
     }
 
     public async registrar(auto: Auto): Promise<Auto> {

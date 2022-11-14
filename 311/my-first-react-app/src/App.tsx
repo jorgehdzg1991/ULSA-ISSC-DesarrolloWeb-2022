@@ -5,6 +5,7 @@ import Registro from './routes/Registro';
 import Autos from './routes/Autos';
 import ListaAutos from './routes/ListaAutos';
 import RegistrarAuto from './routes/RegistrarAuto';
+import DetalleAuto from './routes/DetalleAuto';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: '/autos/registrar',
         element: <RegistrarAuto />
+      },
+      {
+        path: '/autos/:idAuto',
+        element: <DetalleAuto />
       }
     ]
   }

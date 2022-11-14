@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import Auto from '../models/Auto';
 
 interface RenglonTablaAutosProps {
@@ -7,9 +8,15 @@ interface RenglonTablaAutosProps {
 export default function RenglonTablaAutos(
     { auto }: RenglonTablaAutosProps
 ) {
+    const navigate = useNavigate();
+
+    function navegarADetalleAuto() {
+        navigate(`/autos/${auto.id}`);
+    }
+
     return (
         <>
-            <tr>
+            <tr onClick={navegarADetalleAuto}>
                 <td>{auto.modelo}</td>
                 <td>{auto.marca}</td>
                 <td>{auto.submarca}</td>
