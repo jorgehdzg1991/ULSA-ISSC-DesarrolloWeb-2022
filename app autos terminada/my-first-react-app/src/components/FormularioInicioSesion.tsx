@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import IniciarSesionTask from '../tasks/IniciarSesionTask';
 
 export default function FormularioInicioSesion() {
@@ -23,13 +24,22 @@ export default function FormularioInicioSesion() {
         } catch (e) {
             switch ((e as Error).message) {
                 case 'ErrorFormularioIncompleto':
-                    window.alert('Olvidaste completar todos los campos del formulario');
+                    toast(
+                        'Olvidaste completar todos los campos del formulario',
+                        { type: 'warning' }
+                    );
                     break;
                 case 'ErrorNombreUsuarioPasswordIncorrectos':
-                    window.alert('Error de usuario o password');
+                    toast(
+                        'Error de usuario o password',
+                        { type: 'error' }
+                    );
                     break;
                 default:
-                    window.alert('Ha ocurrido un error desconocido');
+                    toast(
+                        'Ha ocurrido un error desconocido',
+                        { type: 'error' }
+                    );
             }
         }
     }

@@ -1,6 +1,7 @@
 import { FormEvent, ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import RegistrarUsuarioTask from '../tasks/RegistrarUsuarioTask';
 
 export default function FormularioRegistro() {
@@ -27,16 +28,28 @@ export default function FormularioRegistro() {
         } catch (e) {
             switch ((e as Error).message) {
                 case 'ErrorFormularioIncompleto':
-                    window.alert('Olvidaste completar todos los campos del formulario');
+                    toast(
+                        'Olvidaste completar todos los campos del formulario',
+                        { type: 'warning' }
+                    );
                     break;
                 case 'ErrorPasswordsNoCoinciden':
-                    window.alert('Las passwords no coinciden');
+                    toast(
+                        'Las passwords no coinciden',
+                        { type: 'warning' }
+                    );
                     break;
                 case 'ErrorNombreUsuarioDuplicado':
-                    window.alert('El nombre de usuario que seleccionaste ya existe');
+                    toast(
+                        'El nombre de usuario que seleccionaste ya existe',
+                        { type: 'error' }
+                    );
                     break;
                 default:
-                    window.alert('Ha ocurrido un error desconocido');
+                    toast(
+                        'Ha ocurrido un error desconocido',
+                        { type: 'error' }
+                    );
             }
         }
     }

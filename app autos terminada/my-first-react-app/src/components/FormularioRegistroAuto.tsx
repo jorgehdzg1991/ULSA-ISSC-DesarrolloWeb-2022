@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Form, Button, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
+import { toast } from 'react-toastify';
 import Auto from '../models/Auto';
 import RegistrarAutoTask from '../tasks/RegistrarAutoTask';
 
@@ -51,6 +52,8 @@ export default function FormularioRegistroAuto() {
 
             await registrarAutoTask.execute();
 
+            toast(`"${modelo}" creado exitosamente!`, { type: 'success' });
+
             navigate('/autos');
         } catch (e) {
             const mensajeError = (e as Error).message;
@@ -61,17 +64,22 @@ export default function FormularioRegistroAuto() {
                     navigate('/inicioSesion');
                     break;
                 case 'ErrorFormularioIncompleto':
-                    window.alert(
-                        'Olvidaste llenar todos los campos del formulario'
+                    toast(
+                        'Olvidaste llenar todos los campos del formulario',
+                        { type: 'warning' }
                     );
                     break;
                 case 'ErrorModeloDuplicado':
-                    window.alert(
-                        'Ya existe un auto con el mismo modelo'
+                    toast(
+                        'Ya existe un auto con el mismo modelo',
+                        { type: 'error' }
                     );
                     break;
                 default:
-                    window.alert('Ha ocurrido un error desconocido');
+                    toast(
+                        'Ha ocurrido un error desconocido',
+                        { type: 'error' }
+                    );
             }
         }
     }

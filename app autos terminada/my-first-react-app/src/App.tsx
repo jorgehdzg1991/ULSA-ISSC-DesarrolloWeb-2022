@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import Home from './components/routes/Home';
 import Autos from './components/routes/Autos';
 import RegistroUsuario from './components/routes/RegistroUsuario';
@@ -6,6 +7,7 @@ import InicioSesion from './components/routes/InicioSesion';
 import ListaAutos from './components/routes/ListaAutos';
 import RegistroAuto from './components/routes/RegistroAuto';
 import DetalleAuto from './components/routes/DetalleAuto';
+import 'react-toastify/dist/ReactToastify.css';
 
 const appRouter = createBrowserRouter([
   {
@@ -51,6 +53,7 @@ const appRouter = createBrowserRouter([
 export default function App() {
   return (
     <>
+      <ToastContainer />
       <RouterProvider router={appRouter} />
     </>
   );

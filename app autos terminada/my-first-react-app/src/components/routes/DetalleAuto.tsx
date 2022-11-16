@@ -1,6 +1,7 @@
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import Auto from '../../models/Auto';
 import AutosService from '../../services/AutosService';
 import FormularioActualizarAuto from '../../components/FormularioActualizarAuto';
@@ -28,7 +29,7 @@ export default function DetalleAuto() {
             if (e instanceof Error && e.message === 'ErrorAutoNoEncontrado') {
                 // do nothing
             } else {
-                window.alert('Ha ocurrido un error desconocido.');
+                toast('Ha ocurrido un error desconocido.', { type: 'error' });
                 navigate('/autos');
                 return;
             }
