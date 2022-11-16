@@ -5,6 +5,7 @@ import RegistroUsuario from './components/routes/RegistroUsuario';
 import InicioSesion from './components/routes/InicioSesion';
 import ListaAutos from './components/routes/ListaAutos';
 import RegistroAuto from './components/routes/RegistroAuto';
+import DetalleAuto from './components/routes/DetalleAuto';
 
 const appRouter = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const appRouter = createBrowserRouter([
       {
         path: '/autos/registrar',
         element: <RegistroAuto />
+      },
+      {
+        path: '/autos/:idAuto',
+        element: <DetalleAuto />
       }
     ]
   }

@@ -63,6 +63,47 @@ export default class AutosService {
         }
     }
 
+    public async obtenerPorId(id: number): Promise<Auto> {
+        try {
+            const respuesta = await axios.get(
+                `${this.baseUrl}/${id}`,
+                { headers: this.headers }
+            );
+
+            const {
+                modelo,
+                marca,
+                submarca,
+                precio,
+                fechaCreacion,
+                fechaActualizacion
+            } = respuesta.data as AutoConFormatoDelBackend;
+
+            return new Auto(
+                id,
+                modelo,
+                marca,
+                submarca,
+                precio,
+                new Date(fechaCreacion),
+                new Date(fechaActualizacion)
+            );
+        } catch (e) {
+            if (e instanceof AxiosError && e.response) {
+                switch (e.response.status) {
+                    case 401:
+                        throw new Error('ErrorSesionExpiradaOInvalida');
+                    case 404:
+                        throw new Error('ErrorAutoNoEncontrado');
+                    default:
+                        throw e;
+                }
+            }
+
+            throw e;
+        }
+    }
+
     public async registrar(auto: Auto): Promise<Auto> {
         try {
             const respuesta = await axios.post(
