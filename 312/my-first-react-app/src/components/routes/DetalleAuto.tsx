@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Row, Col, Card } from 'react-bootstrap';
 import Auto from '../../models/Auto';
 import AutosService from '../../services/AutosService';
+import FormularioActualizarAuto from '../FormularioActualizarAuto';
+import { Link } from 'react-router-dom';
 
 export default function DetalleAuto() {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -35,9 +38,7 @@ export default function DetalleAuto() {
                         navigate('/inicioSesion');
                         return;
                     case 'ErrorAutoNoEncontrado':
-                        window.alert('Auto no encontrado');
-                        navigate('/autos');
-                        return;
+                        break;
                     default:
                         window.alert('Ha ocurrido un error desconocido');
                         navigate('/autos');
@@ -49,13 +50,33 @@ export default function DetalleAuto() {
         setIsLoaded(true);
     }
 
+    useEffect(() => {
+        if (!isLoaded) {
+            loadAuto();
+        }
+    });
+
     if (!isLoaded) {
         return <>Loading...</>;
     }
 
+    if (!auto) {
+        return <h3>Error 404: Auto no encontrado.</h3>;
+    }
+
     return (
         <>
-            {idAuto}
+            <Row>
+                <Col md={{ span: 6, offset: 3 }}>
+                    <h3>{auto.modelo}</h3>
+                    <Link to="/autos">&lt; Regresar</Link>
+                    <Card>
+                        <Card.Body>
+                            <FormularioActualizarAuto auto={auto} />
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
         </>
     );
 }
